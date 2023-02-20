@@ -1,9 +1,12 @@
 {
   "name": "my-app",
   "version": "0.1.0",
-  "homepage": "https://AziatAbd.github.io/HW-14-useMemo",
+  "homepage": "https://AziatAbd.github.io/HW-20-order-food",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.11.9",
     "@reduxjs/toolkit": "^1.9.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

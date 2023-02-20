@@ -43,7 +43,7 @@ export const mealsSlice = createSlice({
     builder.addCase(getMeals.rejected, (state, action) => {
       state.meals = action.payload;
       state.isLoading = false;
-      state.error = "";
+      state.error = action.payload;
     });
   },
 });
