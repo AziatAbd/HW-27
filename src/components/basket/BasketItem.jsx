@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "../UI/Button";
-import { ReactComponent as PlusIcon } from "../../assets/icons/plus-icon.svg";
-import { ReactComponent as MinusIcon } from "../../assets/icons/minus-icon.svg";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 const BasketItem = ({
   title,
@@ -25,14 +25,14 @@ const BasketItem = ({
             variant="outlined"
             onClick={decrementAmount}
           >
-            <MinusIcon />
+            <RemoveIcon />
           </Button>
           <Button
             borderStyle="squared"
             variant="outlined"
             onClick={incrementAmount}
           >
-            <PlusIcon />
+            <AddIcon />
           </Button>
         </CounterContainer>
       </Content>
