@@ -40,7 +40,7 @@ const Price = styled.p`
   font-weight: 600;
   font-size: 22px;
   line-height: 33px;
-  color: #8a2b06;
+  color: #0ff;
   margin: 0;
 `;
 

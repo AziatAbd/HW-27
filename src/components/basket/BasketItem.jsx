@@ -64,7 +64,7 @@ const Price = styled.p`
   font-weight: 600;
   font-size: 18px;
   line-height: 27px;
-  color: #ad5502;
+  color: #0ff;
 `;
 
 const Amount = styled.span`

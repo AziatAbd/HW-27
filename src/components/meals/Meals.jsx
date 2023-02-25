@@ -1,9 +1,10 @@
 import React, { memo } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
+import styledComponents from "styled-components";
 import MealItem from "./meal-item/MealItem";
 import { getMeals } from "../../store/meals/MealsSlice";
+import { styled } from "@mui/system";
 
 const Meals = () => {
   const { meals, isLoading, error } = useSelector((state) => state.meals);
@@ -29,14 +30,16 @@ const Meals = () => {
 
 export default memo(Meals);
 
-const Card = styled.div`
+const Card = styledComponents.div`
   background: #fff;
   border-radius: 1rem;
   width: 64.9375rem;
   margin: 160px auto;
 `;
 
-const StyledUl = styled.ul`
-  list-style: none;
-  padding: 20px 40px;
-`;
+const StyledUl = styled("ul")(({ theme }) => ({
+  listStyle: " none",
+  padding: "20px 40px",
+  background: theme.palette.primary.main,
+  color: theme.palette.primary.contrastText,
+}));

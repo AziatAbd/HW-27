@@ -1,13 +1,16 @@
+import { styled } from "@mui/system";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
 import { getBasket } from "../../store/basket/basketSlice";
+import { uiActions } from "../../store/UI/uiSlice";
+import Button from "../UI/Button";
 import BusketButton from "./BusketButton";
 
 const Header = ({ onShowBasket }) => {
   const items = useSelector((state) => state.basket.items);
   const [animationClass, setAnimationClass] = useState("");
+  const themeMode = useSelector((state) => state.ui.themeMode);
 
   const dispatch = useDispatch();
 
@@ -35,6 +38,12 @@ const Header = ({ onShowBasket }) => {
     };
   }, [items]);
 
+  const themeChangeHandler = () => {
+    const theme = themeMode === "light" ? "dark" : "light";
+
+    dispatch(uiActions.changeTheme(theme));
+  };
+
   return (
     <Container>
       <Logo>ReactMeals</Logo>
@@ -43,29 +52,32 @@ const Header = ({ onShowBasket }) => {
         onClick={onShowBasket}
         count={calculateTotalAmount()}
       />
+      <Button onClick={themeChangeHandler}>
+        {themeMode === "light" ? "Turn Dark mode" : "Turn light mode"}
+      </Button>
     </Container>
   );
 };
 
 export default Header;
 
-const Container = styled.header`
-  position: fixed;
-  top: 0;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  height: 6.3125rem;
-  background: #8a2b06;
-  padding: 0 7.5rem;
-  align-items: center;
-  z-index: 1;
-`;
+const Container = styled("header")(({ theme }) => ({
+  position: "fixed",
+  top: 0,
+  display: "flex",
+  justifyContent: "space-between",
+  width: "100%",
+  height: "6.3125rem",
+  backgroundColor: theme.palette.primary.light,
+  padding: "0 7.5rem",
+  alignItems: "center",
+  zIndex: 1,
+}));
 
-const Logo = styled.p`
-  font-weight: 600;
-  font-size: 2.375rem;
-  line-height: 3.5625rem;
-  color: #ffffff;
-  margin: 0;
-`;
+const Logo = styled("p")(() => ({
+  fontWeight: 600,
+  fontSize: "2.375rem",
+  lineHeight: "3.5625rem",
+  color: "#ffffff",
+  margin: 0,
+}));

@@ -16,8 +16,8 @@ const BusketButton = ({ count, ...props }) => {
 
 export default BusketButton;
 
-const StyledMuiButton = styled(Button)(() => ({
-  background: "#5a1f08",
+const StyledMuiButton = styled(Button)(({ theme }) => ({
+  background: theme.palette.primary.main,
   color: "#fff",
   borderRadius: "1.25rem",
   padding: " 0.75rem 2rem",
@@ -30,11 +30,11 @@ const StyledMuiButton = styled(Button)(() => ({
   alignItems: "center",
 
   "&:hover": {
-    backgroundColor: "#2c0d00",
+    backgroundColor: theme.palette.primary.main,
   },
 
   "&:hover > #counter": {
-    background: "#662207",
+    background: theme.palette.primary.dark,
   },
 
   "&.bump": {
@@ -64,12 +64,12 @@ const StyledTitle = styledComponent.span`
   margin: 0 1.5rem 0 0.75rem;
 `;
 
-const StyledCounter = styledComponent.span`
-  background: #8a2b06;
-  border-radius: 1.875rem;
-  color: #fff;
-  font-weight: 700;
-  font-size: 1.25rem;
-  line-height: 1.6875rem;
-  padding: 0.25rem 1.25rem;
-`;
+const StyledCounter = styled("span")(({ theme }) => ({
+  background: theme.palette.primary.main,
+  borderRadius: "1.875rem",
+  color: "#fff",
+  fontWeight: 700,
+  fontSize: "1.25rem",
+  lineHeight: "1.6875rem",
+  padding: "0.25rem 1.25rem",
+}));

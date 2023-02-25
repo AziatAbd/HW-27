@@ -36,7 +36,7 @@ const Price = styled.span`
   font-weight: 700;
   font-size: 1.25rem;
   line-height: 1.875rem;
-  color: #ad5502;
+  color: #0ff;
 `;
 
 const StyledLi = styled.li`
