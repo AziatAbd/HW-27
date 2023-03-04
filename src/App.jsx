@@ -1,27 +1,19 @@
 import { createTheme, ThemeProvider } from '@mui/material'
-import { useCallback, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import styled, { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 import './App.css'
-import Basket from './components/basket/Basket'
-import Header from './components/header/Header'
-import Meals from './components/meals/Meals'
-import Summary from './components/summary/Summary'
 import Snackbar from './components/UI/Snackbar'
 import { darkTheme, lightTheme } from './lib/constants/theme'
+import Routes from './routes/Routes'
 import { uiActions } from './store/UI/ui.slice'
 
 function App() {
     const dispatch = useDispatch()
-    const [isBasketVisible, setBasketVisible] = useState(false)
 
     const snackbar = useSelector((state) => state.ui.snackbar)
 
     const themeMode = useSelector((state) => state.ui.themeMode)
-
-    const showBasketHandler = useCallback(() => {
-        setBasketVisible((prevState) => !prevState)
-    }, [])
 
     const theme = useMemo(() => {
         const currentTheme =
@@ -40,15 +32,6 @@ body {
     return (
         <div className="App">
             <ThemeProvider theme={theme}>
-                <Header onShowBasket={showBasketHandler} />
-                <Content>
-                    <Summary />
-                    <Meals />
-                    <Basket
-                        onClose={showBasketHandler}
-                        open={isBasketVisible}
-                    />
-                </Content>
                 <Snackbar
                     isOpen={snackbar.isOpen}
                     severity={snackbar.severity}
@@ -57,13 +40,10 @@ body {
                     onClose={() => dispatch(uiActions.closeSnackbar())}
                 />
                 <GlobalStyle />
+                <Routes />
             </ThemeProvider>
         </div>
     )
 }
 
 export default App
-
-const Content = styled.div`
-    margin-top: 101px;
-`

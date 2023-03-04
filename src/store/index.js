@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+import authSlice from './auth/auth.slice'
 // import thunk from 'redux-thunk'
 import { basketSlice } from './basket/basket.slice'
 import { mealsSlice } from './meals/Meals.slice'
@@ -17,6 +18,7 @@ const store = configureStore({
         [mealsSlice.name]: mealsSlice.reducer,
         [basketSlice.name]: basketSlice.reducer,
         [uiSlice.name]: uiSlice.reducer,
+        [authSlice.name]: authSlice.reducer,
     },
 })
 

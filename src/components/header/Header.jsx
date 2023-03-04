@@ -1,12 +1,15 @@
 import { styled } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { getBasket } from '../../store/basket/basketThunk'
 import { uiActions } from '../../store/UI/ui.slice'
 import Button from '../UI/Button'
 import BusketButton from './BusketButton'
 
 const Header = ({ onShowBasket }) => {
+    const navigate = useNavigate()
+    const isAuthorized = useSelector((state) => state.auth.isAuthorized)
     const items = useSelector((state) => state.basket.items)
     const [animationClass, setAnimationClass] = useState('')
     const themeMode = useSelector((state) => state.ui.themeMode)
@@ -43,6 +46,14 @@ const Header = ({ onShowBasket }) => {
         dispatch(uiActions.changeTheme(theme))
     }
 
+    const signOutHandler = () => {
+        navigate('/signin')
+    }
+
+    const signInHandler = () => {
+        navigate('/signin')
+    }
+
     return (
         <Container>
             <Logo>ReactMeals</Logo>
@@ -54,6 +65,11 @@ const Header = ({ onShowBasket }) => {
             <Button onClick={themeChangeHandler}>
                 {themeMode === 'light' ? 'Turn Dark mode' : 'Turn light mode'}
             </Button>
+            {isAuthorized ? (
+                <Button onClick={signOutHandler}>Sign Out</Button>
+            ) : (
+                <Button onClick={signInHandler}>Sign In</Button>
+            )}
         </Container>
     )
 }

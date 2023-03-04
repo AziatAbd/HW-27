@@ -29,30 +29,19 @@ export const lightTheme = {
             dark: '#0cec32',
             contrastText: '#fff',
         },
-        //   warning: {
-        //     main: "#8a2b06",
-        //     light: "#c44817",
-        //     dark: "#481805",
-        //   },
-        //   info: {
-        //     main: "#8a2b06",
-        //     light: "#c44817",
-        //     dark: "#481805",
-        //   },
     },
     typography: {
         fontFamily: 'Roboto',
         fonSize: 14,
     },
-    spacing: {},
 }
 
 export const darkTheme = {
     palette: {
         primary: {
-            main: '#123e6a',
+            main: '#1976d2',
             light: '#1976d2',
-            dark: '#1976d2',
+            dark: '#123e6a',
             contrastText: '#fff',
         },
 
@@ -76,22 +65,11 @@ export const darkTheme = {
             dark: '#0cec32',
             contrastText: '#fff',
         },
-        //   warning: {
-        //     main: "#8a2b06",
-        //     light: "#c44817",
-        //     dark: "#481805",
-        //   },
-        //   info: {
-        //     main: "#8a2b06",
-        //     light: "#c44817",
-        //     dark: "#481805",
-        //   },
     },
     typography: {
         fontFamily: 'Roboto',
         fonSize: 14,
     },
-    // spacing: {},
 }
 
 export const getTheme = () => {

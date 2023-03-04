@@ -9,8 +9,10 @@
         "plugin:prettier/recommended"
     ],
     "overrides": [
-        // "files": ["src/**/*.slice.js"],
-        // "rules": {"no-param-reassign": ["error", {}]}
+        {
+            "files": ["src/**/*.slice.js"],
+            "rules": { "no-param-reassign": ["error", { "props": false }] }
+        }
     ],
 
     "parserOptions": {
@@ -23,20 +25,7 @@
         "react/prop-types": "off",
         "react/react-in-jsx-scope": "off",
         "react/jsx-props-no-spreading": "off",
-        // " import/no-extraneous-dependencies": [
-        //     "error",
-        //     { "devDependencies": true }
-        // ]
-        // "import/no-extraneous-dependencies": "off"
-        // "import/no-extraneous-dependencies": [
-        //     "error",
-        //     {
-        //         "devDependencies": false,
-        //         "optionalDependencies": false,
-        //         "peerDependencies": false,
-        //         "packageDir": "./"
-        //     }
-        // ]
+
         "import/no-extraneous-dependencies": "off"
     }
 }

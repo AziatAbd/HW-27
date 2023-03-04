@@ -36,7 +36,9 @@ const getPadding = (borderStyle) => {
     return borderStyle === 'rounded' ? '10px 32px' : '8px 14px'
 }
 
-const StyledMuiButton = styled(MuiButton)((variant, borderStyle) => ({
+const StyledMuiButton = styled(MuiButton, {
+    shouldForwardProp: (prop) => prop !== 'borderStyle',
+})((variant, borderStyle) => ({
     display: 'flex',
     alignItems: 'center',
     gap: '0.3125rem',

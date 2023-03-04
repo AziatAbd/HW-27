@@ -62,7 +62,7 @@ const StyledTitle = styledComponent.span`
 `
 
 const StyledCounter = styled('span')(({ theme }) => ({
-    background: theme.palette.primary.main,
+    background: theme.palette.primary.dark,
     borderRadius: '1.875rem',
     color: '#fff',
     fontWeight: 700,

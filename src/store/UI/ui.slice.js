@@ -6,7 +6,7 @@ const initialState = {
     snackbar: {
         isOpen: false,
         message: '',
-        severity: '',
+        severity: 'info',
     },
 }
 export const uiSlice = createSlice({
