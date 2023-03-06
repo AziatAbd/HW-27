@@ -24,7 +24,6 @@ const Header = ({ onShowBasket }) => {
         const sum = items.reduce((s, item) => {
             return s + item.amount
         }, 0)
-
         return sum
     }
 

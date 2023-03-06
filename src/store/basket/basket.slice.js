@@ -48,8 +48,7 @@ export const basketSlice = createSlice({
             state.error = action.payload
         })
 
-        builder.addCase(getBasket.rejected, (state, action) => {
-            state.items = action.payload
+        builder.addCase(getBasket.rejected, (state) => {
             state.isLoading = false
             state.error = 'error'
         })

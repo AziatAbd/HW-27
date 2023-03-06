@@ -1,7 +1,7 @@
-import { Grid, TextField } from '@mui/material'
+import { Grid, TextField, Typography } from '@mui/material'
 import { styled } from '@mui/system'
 import { useFormik } from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import Button from '../components/UI/Button'
@@ -10,18 +10,20 @@ import { signIn } from '../store/auth/auth.thunk'
 const SignIn = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [error, setError] = useState('')
 
-    const submitHandler = async ({ email, password }) => {
-        try {
-            const loginData = {
-                email,
-                password,
-            }
-            await dispatch(signIn(loginData)).unwrap()
-            navigate('/')
-        } catch (error) {
-            console.log(error)
+    const submitHandler = ({ email, password }) => {
+        const loginData = {
+            email,
+            password,
         }
+
+        setError('')
+
+        dispatch(signIn(loginData))
+            .unwrap()
+            .then(() => navigate('/'))
+            .catch((e) => setError(e.response.data.message))
     }
 
     const formik = useFormik({
@@ -34,23 +36,39 @@ const SignIn = () => {
 
     const { values, handleChange, handleSubmit } = formik
 
+    const isEmailValid = () => {
+        return (
+            values.email.length === 0 ||
+            (values.email.length > 0 && values.email.includes('@'))
+        )
+    }
+    const isPasswordValid = () => {
+        return (
+            values.password.length === 0 ||
+            (values.password.length > 0 && values.password >= 6)
+        )
+    }
+
     return (
         <MainGrid>
             <GridContainer>
                 <form onSubmit={handleSubmit}>
                     <FormGrid>
                         <TextField
+                            error={!isEmailValid}
                             value={values.email}
                             onChange={handleChange}
                             label="Email"
                             name="email"
                         />
                         <TextField
+                            error={!isPasswordValid}
                             value={values.password}
                             onChange={handleChange}
                             label="Password"
                             name="password"
                         />
+                        {error && <Error>{error}</Error>}
                         <Button type="submit">Sign In</Button>
                         <Link to="/signup">{`Don't have account`}</Link>
                     </FormGrid>
@@ -75,6 +93,12 @@ const GridContainer = styled(Grid)(() => ({
 }))
 
 const FormGrid = styled(Grid)(() => ({
-    display: 'flex',
+    display: 'grid',
     flexDirection: 'column',
+    gap: '20px',
+}))
+
+const Error = styled(Typography)(({ theme }) => ({
+    color: theme.palette.error.main,
+    textAlign: 'center',
 }))

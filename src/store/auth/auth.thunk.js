@@ -23,7 +23,7 @@ export const signIn = createAsyncThunk(
     async (payload, { rejectWithValue }) => {
         try {
             const { data } = await signInRequest(payload)
-            localStorage.getItem(STORAGE_KEYS.AUTH)
+            localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(data.data))
             return data.data
         } catch (error) {
             return rejectWithValue(error)

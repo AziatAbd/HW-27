@@ -3,22 +3,28 @@ import { styled } from '@mui/system'
 import { useFormik } from 'formik'
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Button from '../components/UI/Button'
 import UserRoles from '../lib/constants/common'
 import signUp from '../store/auth/auth.thunk'
 
 const SignUp = () => {
     const dispatch = useDispatch()
-    const submitHandler = ({ email, name, password }) => {
-        const data = {
-            email,
-            name,
-            password,
-            role: UserRoles.ADMIN,
-        }
+    const navigate = useNavigate()
 
-        dispatch(signUp(data))
+    const submitHandler = async ({ email, name, password }) => {
+        try {
+            const data = {
+                email,
+                name,
+                password,
+                role: UserRoles.ADMIN,
+            }
+            await dispatch(signUp(data)).unwrap()
+            navigate('/signin')
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const formik = useFormik({
