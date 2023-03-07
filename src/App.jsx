@@ -25,7 +25,7 @@ function App() {
     const GlobalStyle = createGlobalStyle`
 body {
   margin: 0;
-  background-color: ${theme.palette.primary.dark};
+  background: antiquewhite;
 }
 `
 

@@ -2,6 +2,7 @@ import { styled } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { signOut } from '../../store/auth/auth.thunk'
 import { getBasket } from '../../store/basket/basketThunk'
 import { uiActions } from '../../store/UI/ui.slice'
 import Button from '../UI/Button'
@@ -10,6 +11,7 @@ import BusketButton from './BusketButton'
 const Header = ({ onShowBasket }) => {
     const navigate = useNavigate()
     const isAuthorized = useSelector((state) => state.auth.isAuthorized)
+    console.log(isAuthorized)
     const items = useSelector((state) => state.basket.items)
     const [animationClass, setAnimationClass] = useState('')
     const themeMode = useSelector((state) => state.ui.themeMode)
@@ -46,7 +48,8 @@ const Header = ({ onShowBasket }) => {
     }
 
     const signOutHandler = () => {
-        navigate('/signin')
+        dispatch(signOut())
+        // navigate('/signin')
     }
 
     const signInHandler = () => {
@@ -55,7 +58,7 @@ const Header = ({ onShowBasket }) => {
 
     return (
         <Container>
-            <Logo>ReactMeals</Logo>
+            <Logo onClick={() => navigate('/')}>ReactMeals</Logo>
             <BusketButton
                 className={animationClass}
                 onClick={onShowBasket}

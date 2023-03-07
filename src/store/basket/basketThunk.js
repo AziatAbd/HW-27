@@ -1,17 +1,19 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import {
     addToBasketReq,
-    deleteBasketItemReq,
+    deleteBasketItemRebq,
     getBasketReq,
     updateBasketItemReq,
-} from '../../api/mealService'
+} from '../../api/basketService'
+
 import fetchAPI from '../../lib/fetchApi'
 
 export const getBasket = createAsyncThunk(
     'basket/getBasket',
-    async (_, { rejectWithValue }) => {
+    async (_, { rejectWithValue, getState }) => {
         try {
-            const { data } = await getBasketReq()
+            const { token } = getState().auth
+            const { data } = await getBasketReq(token)
             return data.data.items
         } catch (error) {
             return rejectWithValue(error)
@@ -21,9 +23,10 @@ export const getBasket = createAsyncThunk(
 
 export const addToBasket = createAsyncThunk(
     'basket/addNewBasket',
-    async (newItem, { dispatch, rejectWithValue }) => {
+    async (newItem, { dispatch, rejectWithValue, getState }) => {
         try {
-            await addToBasketReq(newItem)
+            const { token } = getState().auth
+            await addToBasketReq(newItem, token)
             dispatch(getBasket())
         } catch (error) {
             rejectWithValue(error)
@@ -32,9 +35,10 @@ export const addToBasket = createAsyncThunk(
 )
 export const updateBasketItem = createAsyncThunk(
     'basket/updateBasket',
-    async ({ id, amount }, { dispatch, rejectWithValue }) => {
+    async ({ id, amount }, { dispatch, rejectWithValue, getState }) => {
         try {
-            await updateBasketItemReq(id, amount)
+            const { token } = getState().auth
+            await updateBasketItemReq(id, amount, token)
             dispatch(getBasket())
         } catch (error) {
             rejectWithValue(error)
@@ -44,9 +48,10 @@ export const updateBasketItem = createAsyncThunk(
 
 export const deleteBasketItem = createAsyncThunk(
     'basket/deleteBasket',
-    async (id, { dispatch, rejectWithValue }) => {
+    async (id, { dispatch, rejectWithValue, getState }) => {
         try {
-            await deleteBasketItemReq(id)
+            const { token } = getState().auth
+            await deleteBasketItemRebq(id, token)
             dispatch(getBasket())
         } catch (error) {
             rejectWithValue(error)

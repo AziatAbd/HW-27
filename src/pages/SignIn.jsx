@@ -55,14 +55,14 @@ const SignIn = () => {
                 <form onSubmit={handleSubmit}>
                     <FormGrid>
                         <TextField
-                            error={!isEmailValid}
+                            error={!isEmailValid()}
                             value={values.email}
                             onChange={handleChange}
                             label="Email"
                             name="email"
                         />
                         <TextField
-                            error={!isPasswordValid}
+                            error={!isPasswordValid()}
                             value={values.password}
                             onChange={handleChange}
                             label="Password"

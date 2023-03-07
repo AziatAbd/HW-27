@@ -1,24 +1,23 @@
-import axiosInstance from '../config/mealInstence'
+import axiosInstance from '../config/axiosInstance'
+
+export const postMealRequest = (newMeal, token) => {
+    return axiosInstance.post('/foods', newMeal, {
+        headers: { Authorization: token },
+    })
+}
 
 export const getMealRequest = () => {
     return axiosInstance.get('/foods')
 }
 
-export const getBasketReq = () => {
-    return axiosInstance.get('/basket')
-}
-
-export const addToBasketReq = (newItem) => {
-    return axiosInstance.post(`/foods/${newItem.id}/addToBasket`, {
-        amount: newItem.amount,
+export const deleteMealRequest = (token, id) => {
+    return axiosInstance.delete(`/foods/${id}`, {
+        headers: { Authorization: token },
     })
 }
 
-export const updateBasketItemReq = (id, basketAmount) => {
-    return axiosInstance.put(`/basketItem/${id}/update`, {
-        amount: basketAmount,
+export const editMealRequest = (token, data) => {
+    return axiosInstance.put(`/foods/${data.id}`, data.editData, {
+        headers: { Authorization: token },
     })
-}
-export const deleteBasketItemReq = (id) => {
-    return axiosInstance.delete(`/basketItem/${id}/delete`)
 }

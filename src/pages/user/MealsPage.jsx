@@ -1,6 +1,6 @@
 import React from 'react'
-import Meals from '../components/meals/Meals'
-import Summary from '../components/summary/Summary'
+import Meals from '../../components/meals/Meals'
+import Summary from '../../components/summary/Summary'
 
 const MealsPage = () => {
     return (

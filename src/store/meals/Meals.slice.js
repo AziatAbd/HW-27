@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import getMeals from './mealsThunk'
+import { getMeals } from './mealsThunk'
 
 export const mealsActionTypes = {
     GET_MEALS_SUCCESS: 'GET_MEALS_SUCCESS',
@@ -45,6 +45,9 @@ export const mealsSlice = createSlice({
             state.isLoading = false
             state.error = action.payload
         })
+        // builder.addCase(postMeal.fulfilled, (state, action) => {
+        //     state.meals = action.payload
+        // })
     },
 })
 

@@ -23,12 +23,16 @@ export const signIn = createAsyncThunk(
     async (payload, { rejectWithValue }) => {
         try {
             const { data } = await signInRequest(payload)
-            localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(data.data))
-            return data.data
+            const userData = data.data
+            localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(userData))
+            return userData
         } catch (error) {
             return rejectWithValue(error)
         }
     }
 )
+export const signOut = createAsyncThunk('auth/signout', async () => {
+    return localStorage.removeItem(STORAGE_KEYS.AUTH)
+})
 
 export default signUp

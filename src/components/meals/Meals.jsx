@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import styledComponents from 'styled-components'
 import { styled } from '@mui/material'
 import MealItem from './meal-item/MealItem'
-import getMeals from '../../store/meals/mealsThunk'
+import { getMeals } from '../../store/meals/mealsThunk'
 
 const Meals = () => {
     const { meals, isLoading, error } = useSelector((state) => state.meals)

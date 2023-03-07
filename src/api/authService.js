@@ -1,4 +1,4 @@
-import axiosInstance from '../config/mealInstence'
+import axiosInstance from '../config/axiosInstance'
 
 export const signUpRequest = (data) => {
     return axiosInstance.post('/auth/register', data)
