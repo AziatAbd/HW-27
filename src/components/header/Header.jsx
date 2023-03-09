@@ -11,7 +11,6 @@ import BusketButton from './BusketButton'
 const Header = ({ onShowBasket }) => {
     const navigate = useNavigate()
     const isAuthorized = useSelector((state) => state.auth.isAuthorized)
-    console.log(isAuthorized)
     const items = useSelector((state) => state.basket.items)
     const [animationClass, setAnimationClass] = useState('')
     const themeMode = useSelector((state) => state.ui.themeMode)

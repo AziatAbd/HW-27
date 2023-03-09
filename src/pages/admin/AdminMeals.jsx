@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 import Button from '../../components/UI/Button'
 import { getMeals, deleteMeal, postMeal } from '../../store/meals/mealsThunk'
+import { uiActions } from '../../store/UI/ui.slice'
 import MealItem from './AdminMealItem'
 import MealForm from './MealForm'
 import UpdateMealForm from './UpdateMealForm'
@@ -15,6 +16,7 @@ const AdminMeals = () => {
     const { meals } = useSelector((state) => state.meals)
     const [isEdit, setEdit] = useState(false)
     const [mealModal, setMealModal] = useSearchParams()
+    const [editingMealId, setEditingMealId] = useState(null)
 
     useEffect(() => {
         dispatch(getMeals())
@@ -30,21 +32,40 @@ const AdminMeals = () => {
         setMealModal(mealModal)
     }
 
-    const submitHandler = ({ title, description, price }) => {
-        const newMeal = {
-            title,
-            description,
-            price,
+    const submitHandler = async ({ title, description, price }) => {
+        try {
+            const newMeal = {
+                title,
+                description,
+                price,
+            }
+            await dispatch(postMeal(newMeal)).unwrap()
+            dispatch(
+                uiActions.showSnackbar({
+                    isOpen: true,
+                    severity: 'success',
+                    message: 'oreder has been added successfully.',
+                })
+            )
+        } catch (error) {
+            dispatch(
+                uiActions.showSnackbar({
+                    isOpen: true,
+                    severity: 'error',
+                    message: 'Failed',
+                })
+            )
+        } finally {
+            closeModalHandler()
         }
-        dispatch(postMeal(newMeal))
-        closeModalHandler()
     }
 
     const removeMealHandler = (id) => {
         dispatch(deleteMeal(id))
     }
 
-    const editHandler = () => {
+    const editHandler = (id) => {
+        setEditingMealId(id)
         setEdit(true)
     }
 
@@ -73,13 +94,13 @@ const AdminMeals = () => {
                     <h1>Meals</h1>
                     {meals.map((item) => (
                         <Meals key={item._id}>
-                            {isEdit ? (
+                            {isEdit && editingMealId === item._id ? (
                                 <UpdateMealForm item={item} setEdit={setEdit} />
                             ) : (
                                 <MealItem
                                     item={item}
                                     removeMealHandler={removeMealHandler}
-                                    editHandler={editHandler}
+                                    editHandler={() => editHandler(item._id)}
                                 />
                             )}
                         </Meals>
@@ -94,8 +115,10 @@ export default AdminMeals
 
 const Container = styled('div')(() => ({
     margin: '30px 0 ',
+    background: '#fff',
 }))
 
 const Meals = styled('div')(() => ({
     border: '1px solid',
+    padding: '10px',
 }))

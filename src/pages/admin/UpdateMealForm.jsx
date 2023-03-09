@@ -14,7 +14,6 @@ const UpdateMealForm = ({ item, setEdit }) => {
             description,
             price,
         }
-        console.log(updateMeal)
 
         const data = {
             // eslint-disable-next-line no-underscore-dangle

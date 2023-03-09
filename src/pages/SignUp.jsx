@@ -18,7 +18,7 @@ const SignUp = () => {
             email,
             name,
             password,
-            role: UserRoles.ADMIN,
+            role: UserRoles.USER,
         }
         await dispatch(signUp(data))
             .unwrap()

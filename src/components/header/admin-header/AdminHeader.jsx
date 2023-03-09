@@ -1,5 +1,4 @@
-import { AppBar, Button, Grid, IconButton, Toolbar } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
+import { AppBar, Button, Grid, Toolbar } from '@mui/material'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { styled } from '@mui/system'
@@ -29,19 +28,10 @@ const AdminHeader = () => {
             <Toolbar>
                 <Appbar>
                     <StyledGrid>
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            aria-label="menu"
-                            sx={{ mr: 2 }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
                         {menus.map((item) => (
-                            <NavLink key={item.path} to={item.path}>
+                            <StyledNavLink key={item.path} to={item.path}>
                                 {item.title}
-                            </NavLink>
+                            </StyledNavLink>
                         ))}
                     </StyledGrid>
                     <Button color="inherit" onClick={signOutHandler}>
@@ -64,5 +54,19 @@ const Appbar = styled(Grid)(() => ({
 
 const StyledGrid = styled(Grid)(() => ({
     display: 'flex',
-    gap: '10px',
+    gap: '20px',
+    alignItems: 'center',
+}))
+
+const StyledNavLink = styled(NavLink)(() => ({
+    textDecoration: 'none',
+    color: '#fff',
+
+    '&:hover': {
+        color: '#8a8a8a',
+    },
+
+    '&.active': {
+        color: '#f00',
+    },
 }))

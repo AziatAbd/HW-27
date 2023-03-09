@@ -1,7 +1,6 @@
 import { createTheme, ThemeProvider } from '@mui/material'
 import { useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { createGlobalStyle } from 'styled-components'
 import './App.css'
 import Snackbar from './components/UI/Snackbar'
 import { darkTheme, lightTheme } from './lib/constants/theme'
@@ -22,13 +21,6 @@ function App() {
         return createTheme(currentTheme)
     }, [themeMode])
 
-    const GlobalStyle = createGlobalStyle`
-body {
-  margin: 0;
-  background: antiquewhite;
-}
-`
-
     return (
         <div className="App">
             <ThemeProvider theme={theme}>
@@ -39,7 +31,6 @@ body {
                     autoHideDuration={4000}
                     onClose={() => dispatch(uiActions.closeSnackbar())}
                 />
-                <GlobalStyle />
                 <Routes />
             </ThemeProvider>
         </div>
