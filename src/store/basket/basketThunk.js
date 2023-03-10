@@ -35,10 +35,9 @@ export const addToBasket = createAsyncThunk(
 )
 export const updateBasketItem = createAsyncThunk(
     'basket/updateBasket',
-    async ({ id, amount }, { dispatch, rejectWithValue, getState }) => {
+    async ({ id, amount }, { dispatch, rejectWithValue }) => {
         try {
-            const { token } = getState().auth
-            await updateBasketItemReq(id, amount, token)
+            await updateBasketItemReq(id, amount)
             dispatch(getBasket())
         } catch (error) {
             rejectWithValue(error)
@@ -48,10 +47,9 @@ export const updateBasketItem = createAsyncThunk(
 
 export const deleteBasketItem = createAsyncThunk(
     'basket/deleteBasket',
-    async (id, { dispatch, rejectWithValue, getState }) => {
+    async (id, { dispatch, rejectWithValue }) => {
         try {
-            const { token } = getState().auth
-            await deleteBasketItemRebq(id, token)
+            await deleteBasketItemRebq(id)
             dispatch(getBasket())
         } catch (error) {
             rejectWithValue(error)

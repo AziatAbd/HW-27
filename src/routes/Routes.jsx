@@ -3,14 +3,14 @@ import { Routes as Router, Route } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import UserLayout from '../layout/UserLayout'
 import MealsPage from '../pages/user/MealsPage'
-import SignUp from '../pages/SignUp'
-import SignIn from '../pages/SignIn'
 import AdminLayout from '../layout/AdminLayout'
 import Orders from '../pages/admin/Orders'
 import ProtectedRoute from './ProtectedRoute'
 import UserRoles from '../lib/constants/common'
-import NotFound from '../pages/NotFound'
 import AdminMeals from '../pages/admin/AdminMeals'
+import SignUp from '../pages/guest/SignUp'
+import SignIn from '../pages/guest/SignIn'
+import NotFound from '../pages/guest/NotFound'
 
 const Routes = () => {
     const role = useSelector((state) => state.auth.user.role)

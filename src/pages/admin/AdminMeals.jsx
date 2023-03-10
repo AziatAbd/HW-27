@@ -30,6 +30,7 @@ const AdminMeals = () => {
     const closeModalHandler = () => {
         mealModal.delete('modal')
         setMealModal(mealModal)
+        setEdit(false)
     }
 
     const submitHandler = async ({ title, description, price }) => {
@@ -81,32 +82,38 @@ const AdminMeals = () => {
 
     return (
         <Container>
-            {mealModal.has('modal') ? (
+            {mealModal.has('modal') && (
                 <MealForm
                     values={values}
                     handleChange={handleChange}
                     handleSubmit={handleSubmit}
                     onClose={closeModalHandler}
+                    onOpen={mealModal}
                 />
-            ) : (
-                <div>
-                    <Button onClick={openModalHandler}>Add meal</Button>
-                    <h1>Meals</h1>
-                    {meals.map((item) => (
-                        <Meals key={item._id}>
-                            {isEdit && editingMealId === item._id ? (
-                                <UpdateMealForm item={item} setEdit={setEdit} />
-                            ) : (
-                                <MealItem
-                                    item={item}
-                                    removeMealHandler={removeMealHandler}
-                                    editHandler={() => editHandler(item._id)}
-                                />
-                            )}
-                        </Meals>
-                    ))}
-                </div>
             )}
+
+            <div>
+                <Button onClick={openModalHandler}>Add meal</Button>
+                <h1>Meals</h1>
+                {meals.map((item) => (
+                    <Meals key={item._id}>
+                        {editingMealId === item._id && (
+                            <UpdateMealForm
+                                item={item}
+                                setEdit={setEdit}
+                                onClose={closeModalHandler}
+                                onOpen={isEdit}
+                            />
+                        )}
+                        <MealItem
+                            item={item}
+                            removeMealHandler={removeMealHandler}
+                            editHandler={editHandler}
+                            setEdit={setEdit}
+                        />
+                    </Meals>
+                ))}
+            </div>
         </Container>
     )
 }
@@ -116,9 +123,10 @@ export default AdminMeals
 const Container = styled('div')(() => ({
     margin: '30px 0 ',
     background: '#fff',
+    padding: '20px',
 }))
 
 const Meals = styled('div')(() => ({
     border: '1px solid',
-    padding: '10px',
+    padding: '20px',
 }))

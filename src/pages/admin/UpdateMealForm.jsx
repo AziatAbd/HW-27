@@ -1,11 +1,11 @@
-import { styled, TextField } from '@mui/material'
+import { Box, Modal, styled, TextField } from '@mui/material'
 import { useFormik } from 'formik'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import Button from '../../components/UI/Button'
 import { editMeal } from '../../store/meals/mealsThunk'
 
-const UpdateMealForm = ({ item, setEdit }) => {
+const UpdateMealForm = ({ item, setEdit, onClose, onOpen }) => {
     const dispatch = useDispatch()
 
     const updateMealHandler = ({ title, description, price }) => {
@@ -21,6 +21,7 @@ const UpdateMealForm = ({ item, setEdit }) => {
             editData: updateMeal,
         }
         dispatch(editMeal(data))
+        onClose()
         setEdit(false)
     }
     const updateMealFormik = useFormik({
@@ -35,38 +36,57 @@ const UpdateMealForm = ({ item, setEdit }) => {
     const { values, handleChange, handleSubmit } = updateMealFormik
 
     return (
-        <Form onSubmit={handleSubmit}>
-            <TextField
-                value={values.title}
-                onChange={handleChange}
-                name="title"
-                label="Name"
-                type="text"
-            />
-            <TextField
-                value={values.description}
-                onChange={handleChange}
-                name="description"
-                label="Description"
-                type="text"
-            />
-            <TextField
-                value={values.price}
-                onChange={handleChange}
-                name="price"
-                label="Price"
-                type="number"
-            />
-            <Button type="submit">Save</Button>
-            <Button onClick={() => setEdit(false)}>Cancel</Button>
-        </Form>
+        <StyledModal onClose={onClose} open={onOpen}>
+            <StyledBox>
+                <Form onSubmit={handleSubmit}>
+                    <TextField
+                        value={values.title}
+                        onChange={handleChange}
+                        name="title"
+                        label="Name"
+                        type="text"
+                    />
+                    <TextField
+                        value={values.description}
+                        onChange={handleChange}
+                        name="description"
+                        label="Description"
+                        type="text"
+                    />
+                    <TextField
+                        value={values.price}
+                        onChange={handleChange}
+                        name="price"
+                        label="Price"
+                        type="number"
+                    />
+                    <Button type="submit">Save</Button>
+                    <Button onClick={onClose}>Cancel</Button>
+                </Form>
+            </StyledBox>
+        </StyledModal>
     )
 }
 
 export default UpdateMealForm
 
+const StyledModal = styled(Modal)(() => ({
+    display: 'flex',
+    width: '100%',
+    height: '100%',
+}))
+
+const StyledBox = styled(Box)(() => ({
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+}))
+
 const Form = styled('form')(() => ({
     display: 'grid',
     gap: '20px',
     width: '50%',
+    background: '#fff',
+    padding: '20px',
 }))

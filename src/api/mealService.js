@@ -1,23 +1,17 @@
-import axiosInstance from '../config/axiosInstance'
+import { axiosInstance } from '../config/axiosInstance'
 
-export const postMealRequest = (newMeal, token) => {
-    return axiosInstance.post('/foods', newMeal, {
-        headers: { Authorization: token },
-    })
+export const postMealRequest = (newMeal) => {
+    return axiosInstance.post('/foods', newMeal)
 }
 
 export const getMealRequest = () => {
     return axiosInstance.get('/foods')
 }
 
-export const deleteMealRequest = (token, id) => {
-    return axiosInstance.delete(`/foods/${id}`, {
-        headers: { Authorization: token },
-    })
+export const deleteMealRequest = (id) => {
+    return axiosInstance.delete(`/foods/${id}`)
 }
 
-export const editMealRequest = (token, data) => {
-    return axiosInstance.put(`/foods/${data.id}`, data.editData, {
-        headers: { Authorization: token },
-    })
+export const editMealRequest = (data) => {
+    return axiosInstance.put(`/foods/${data.id}`, data.editData)
 }

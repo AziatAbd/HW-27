@@ -4,23 +4,23 @@ import { useFormik } from 'formik'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import Button from '../components/UI/Button'
-import UserRoles from '../lib/constants/common'
-import signUp from '../store/auth/auth.thunk'
+import Button from '../../components/UI/Button'
+import { signIn } from '../../store/auth/auth.thunk'
 
-const SignUp = () => {
+const SignIn = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [error, setError] = useState()
+    const [error, setError] = useState('')
 
-    const submitHandler = async ({ email, name, password }) => {
-        const data = {
+    const submitHandler = ({ email, password }) => {
+        const loginData = {
             email,
-            name,
             password,
-            role: UserRoles.USER,
         }
-        await dispatch(signUp(data))
+
+        setError('')
+
+        dispatch(signIn(loginData))
             .unwrap()
             .then(() => navigate('/'))
             .catch((e) => setError(e.response.data.message))
@@ -28,22 +28,13 @@ const SignUp = () => {
 
     const formik = useFormik({
         initialValues: {
-            name: '',
             email: '',
             password: '',
-            confirmPassword: '',
         },
         onSubmit: submitHandler,
     })
 
     const { values, handleChange, handleSubmit } = formik
-
-    const isNameValid = () => {
-        return (
-            values.name.length === 0 ||
-            (values.name.length > 0 && values.name.length > 3)
-        )
-    }
 
     const isEmailValid = () => {
         return (
@@ -57,9 +48,6 @@ const SignUp = () => {
             (values.password.length > 0 && values.password >= 6)
         )
     }
-    const isConfirmPasswordValid = () => {
-        return values.confirmPassword === values.password
-    }
 
     return (
         <MainGrid>
@@ -67,37 +55,22 @@ const SignUp = () => {
                 <form onSubmit={handleSubmit}>
                     <FormGrid>
                         <TextField
-                            error={!isNameValid()}
-                            value={values.name}
-                            onChange={handleChange}
-                            label="Name"
-                            name="name"
-                            type="text"
-                        />
-                        <TextField
                             error={!isEmailValid()}
                             value={values.email}
                             onChange={handleChange}
-                            name="email"
                             label="Email"
+                            name="email"
                         />
                         <TextField
                             error={!isPasswordValid()}
                             value={values.password}
                             onChange={handleChange}
-                            name="password"
                             label="Password"
-                        />
-                        <TextField
-                            error={!isConfirmPasswordValid()}
-                            value={values.confirmPassword}
-                            onChange={handleChange}
-                            name="confirmPassword"
-                            label="Confirm Password"
+                            name="password"
                         />
                         {error && <Error>{error}</Error>}
-                        <Button type="submit">Sign up</Button>
-                        <Link to="/signin">Have an account</Link>
+                        <Button type="submit">Sign In</Button>
+                        <Link to="/signup">{`Don't have account`}</Link>
                     </FormGrid>
                 </form>
             </GridContainer>
@@ -105,7 +78,7 @@ const SignUp = () => {
     )
 }
 
-export default SignUp
+export default SignIn
 
 const MainGrid = styled(Grid)(() => ({
     display: 'flex',
@@ -121,9 +94,11 @@ const GridContainer = styled(Grid)(() => ({
 
 const FormGrid = styled(Grid)(() => ({
     display: 'grid',
+    flexDirection: 'column',
     gap: '20px',
 }))
 
 const Error = styled(Typography)(({ theme }) => ({
     color: theme.palette.error.main,
+    textAlign: 'center',
 }))
