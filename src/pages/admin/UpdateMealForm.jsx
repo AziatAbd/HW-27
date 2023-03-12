@@ -4,25 +4,43 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import Button from '../../components/UI/Button'
 import { editMeal } from '../../store/meals/mealsThunk'
+import { uiActions } from '../../store/UI/ui.slice'
 
 const UpdateMealForm = ({ item, setEdit, onClose, onOpen }) => {
     const dispatch = useDispatch()
 
-    const updateMealHandler = ({ title, description, price }) => {
-        const updateMeal = {
-            title,
-            description,
-            price,
-        }
+    const updateMealHandler = async ({ title, description, price }) => {
+        try {
+            const updateMeal = {
+                title,
+                description,
+                price,
+            }
 
-        const data = {
-            // eslint-disable-next-line no-underscore-dangle
-            id: item._id,
-            editData: updateMeal,
+            const data = {
+                // eslint-disable-next-line no-underscore-dangle
+                id: item._id,
+                editData: updateMeal,
+            }
+            await dispatch(editMeal(data)).unwrap()
+            dispatch(
+                uiActions.showSnackbar({
+                    isOpen: true,
+                    severity: 'success',
+                    message: 'izmeneno',
+                })
+            )
+            onClose()
+            setEdit(false)
+        } catch (error) {
+            dispatch(
+                uiActions.showSnackbar({
+                    isOpen: true,
+                    severity: 'error',
+                    message: 'ne izmeneno',
+                })
+            )
         }
-        dispatch(editMeal(data))
-        onClose()
-        setEdit(false)
     }
     const updateMealFormik = useFormik({
         initialValues: {

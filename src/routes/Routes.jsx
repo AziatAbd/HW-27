@@ -11,6 +11,7 @@ import AdminMeals from '../pages/admin/AdminMeals'
 import SignUp from '../pages/guest/SignUp'
 import SignIn from '../pages/guest/SignIn'
 import NotFound from '../pages/guest/NotFound'
+import Order from '../components/order/Order'
 
 const Routes = () => {
     const role = useSelector((state) => state.auth.user.role)
@@ -41,6 +42,19 @@ const Routes = () => {
                             ])}
                             fallBackPath="/admin/meals"
                             component={MealsPage}
+                        />
+                    }
+                />
+                <Route
+                    path="my-order"
+                    element={
+                        <ProtectedRoute
+                            isAllowed={isAllowed([
+                                UserRoles.GUEST,
+                                UserRoles.USER,
+                            ])}
+                            fallBackPath="/admin/meals"
+                            component={Order}
                         />
                     }
                 />

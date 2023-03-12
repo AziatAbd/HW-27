@@ -45,7 +45,7 @@ const AdminMeals = () => {
                 uiActions.showSnackbar({
                     isOpen: true,
                     severity: 'success',
-                    message: 'oreder has been added successfully.',
+                    message: 'dobavleno.',
                 })
             )
         } catch (error) {
@@ -53,7 +53,7 @@ const AdminMeals = () => {
                 uiActions.showSnackbar({
                     isOpen: true,
                     severity: 'error',
-                    message: 'Failed',
+                    message: 'ne dobavleno',
                 })
             )
         } finally {
@@ -61,8 +61,25 @@ const AdminMeals = () => {
         }
     }
 
-    const removeMealHandler = (id) => {
-        dispatch(deleteMeal(id))
+    const removeMealHandler = async (id) => {
+        try {
+            await dispatch(deleteMeal(id)).unwrap()
+            dispatch(
+                uiActions.showSnackbar({
+                    isOpen: true,
+                    severity: 'success',
+                    message: 'delete',
+                })
+            )
+        } catch (error) {
+            dispatch(
+                uiActions.showSnackbar({
+                    isOpen: true,
+                    severity: 'error',
+                    message: 'ne delete',
+                })
+            )
+        }
     }
 
     const editHandler = (id) => {
